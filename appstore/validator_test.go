@@ -2,6 +2,7 @@ package appstore
 
 import (
 	"errors"
+	"net/http"
 	"os"
 	"reflect"
 	"testing"
@@ -91,8 +92,9 @@ func TestHandleError(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	expected := Client{
-		URL:     "https://sandbox.itunes.apple.com/verifyReceipt",
-		TimeOut: time.Second * 5,
+		URL:        "https://sandbox.itunes.apple.com/verifyReceipt",
+		TimeOut:    time.Second * 5,
+		HttpClient: http.Client{},
 	}
 
 	actual := New()
@@ -103,8 +105,9 @@ func TestNew(t *testing.T) {
 
 func TestNewWithEnvironment(t *testing.T) {
 	expected := Client{
-		URL:     "https://buy.itunes.apple.com/verifyReceipt",
-		TimeOut: time.Second * 5,
+		URL:        "https://buy.itunes.apple.com/verifyReceipt",
+		TimeOut:    time.Second * 5,
+		HttpClient: http.Client{},
 	}
 
 	os.Setenv("IAP_ENVIRONMENT", "production")
